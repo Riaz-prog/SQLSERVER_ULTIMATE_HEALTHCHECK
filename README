@@ -1,0 +1,1 @@
+Save the HealthCheck.ps1 script as a PowerShell file and place it in the designated drive. Also, create a text file named serverlist.txt containing the instance names listed vertically—one per line, with no commas.
