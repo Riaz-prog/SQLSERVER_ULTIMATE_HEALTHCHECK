@@ -17,28 +17,6 @@ $query = @"
 SELECT DISTINCT
     ROW_NUMBER() OVER (ORDER BY SERVERPROPERTY('servername')) AS 'SNO',
     SERVERPROPERTY('servername') AS ServerName,
-    CASE 
-        WHEN SERVERPROPERTY('servername') ='RACK' THEN 'PROD' 
-        WHEN SERVERPROPERTY('servername') ='RACK58' THEN 'PROD' 
-        WHEN SERVERPROPERTY('servername') ='RACK2' THEN 'PROD' 
-        WHEN SERVERPROPERTY('servername') ='RACK4' THEN 'PROD' 
-        WHEN SERVERPROPERTY('servername') ='RACK8' THEN 'Archival' 
-        WHEN SERVERPROPERTY('servername') ='RACK9' THEN 'STAGING' 
-        WHEN SERVERPROPERTY('servername') ='DCA_UAT' THEN 'UAT' 
-        WHEN SERVERPROPERTY('servername') ='RACK13' THEN 'STAGING' 
-        WHEN SERVERPROPERTY('servername') ='RACK30' THEN 'STAGING' 
-        WHEN SERVERPROPERTY('servername') ='RACK34' THEN 'PROD' 
-        WHEN SERVERPROPERTY('servername') ='SERVER' THEN 'Domain' 
-        WHEN SERVERPROPERTY('servername') ='RACK31' THEN 'PROD'
-        WHEN SERVERPROPERTY('servername') ='RACK42' THEN 'STAGING'
-        WHEN SERVERPROPERTY('servername') ='RACK53' THEN 'STAGING'
-        WHEN SERVERPROPERTY('servername') ='RACK40' THEN 'STAGING'
-        WHEN SERVERPROPERTY('servername') ='BULK_CATS' THEN 'STAGING'
-        WHEN SERVERPROPERTY('servername') ='RACK65' THEN 'PROD'
-        WHEN SERVERPROPERTY('servername') ='RACK40' THEN 'Development'
-        WHEN SERVERPROPERTY('servername') ='RACK64' THEN 'TESTING'
-        WHEN SERVERPROPERTY('servername') ='RACK72' THEN 'PROD'
-    END AS Env,
     (SELECT 'Online') AS Status,
     LEFT (@@VERSION, 37) AS SQL_Version,
     SERVERPROPERTY('ProductVersion') AS SQLVersion,
@@ -1582,7 +1560,6 @@ $html = @"
     <table>
         <tr>
             <th>Server</th>
-            <th>Environment</th>
             <th>Status</th>
             <th>SQL_Version</th>
             <th>SQL Version</th>
@@ -1609,7 +1586,6 @@ switch ($row.Status) {
     }
     $html += "<tr>"
     $html += "<td>$($row.ServerName)</td>"
-    $html += "<td>$($row.Env)</td>"
     $html += "<td style='background-color: $statusColor;'>$($row.Status)</td>"
     $html += "<td>$($row.SQL_Version)</td>"
     $html += "<td>$($row.SQLVersion)</td>"
